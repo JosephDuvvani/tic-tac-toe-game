@@ -67,6 +67,7 @@ const GameController = (function(
             }
             
             if(isWinner(row, col, board.getBoard().length)) console.log(`${activePlayer.name} Wins`);
+            if(!isAvailableBoxes() && !isWinner(row, col, board.getBoard().length)) console.log(`Draw!`);
             switchActivePlayer();
         };
 
@@ -129,6 +130,11 @@ const GameController = (function(
             if(checkTrail(getUpSlopeBoxes(row, col)) === combo) return 1;
             return 0;
         };
+
+        const isAvailableBoxes = () => {
+            const spaces = board.getBoard().map(row => row.filter(box => box.getValue() === 0)).filter(arr => arr.length > 0);
+            if(spaces.length > 0) return true;
+        }
 
         return {getBoard,setPlayerName, play, setActivePlayer}
 })();
