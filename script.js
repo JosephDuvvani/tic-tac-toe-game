@@ -1,21 +1,22 @@
 const Gameboard = (function() {
     let board = [];
-    const emptyBoard = [];
 
     const createBoard = (gridNum) => {
         for(let i = 0; i<gridNum; i++) {
             board[i] = [];
-            emptyBoard[i] = [];
             for(let j = 0; j<gridNum; j++) {
                 board[i].push(Box());
-                emptyBoard[i].push(Box());
             }
         }
     }
 
     const getBoard = () => board;
 
-    const clearBoard = () => board = emptyBoard;
+    const clearBoard = () => {
+        const size = board.length;
+        board = [];
+        createBoard(size);
+    }
 
     const printBoard = () => console.log(board);
 
@@ -58,6 +59,23 @@ const GameController = (function(
 
         const switchActivePlayer = () => (activePlayer === players[0]) ? activePlayer = players[1] : activePlayer = players[0];
 
+        let playerOneScore = 0;
+        let playerTwoScore = 0;
+    
+        const setScore = (x, o = 0) => {
+            playerOneScore += x;
+            playerTwoScore += o;
+        }
+        const getScore = () => ({
+            x: playerOneScore,
+            o:playerTwoScore
+        });
+    
+        const resetScore = () => {
+            playerOneScore = 0;
+            playerTwoScore = 0;
+        }
+
         const play = (row, col) => {
             const box = board.getBoard()[row][col];
             if(box.getValue() === 0) {
@@ -66,8 +84,11 @@ const GameController = (function(
                 return;
             }
             
-            if(isWinner(row, col, board.getBoard().length)) console.log(`${activePlayer.name} Wins`);
-            if(!isAvailableBoxes() && !isWinner(row, col, board.getBoard().length)) console.log(`Draw!`);
+            if(isWinner(row, col, board.getBoard().length)) {
+                console.log(`${activePlayer.name} Wins`);
+                (activePlayer.marker === 'X') ? setScore(1) : setScore(0,1);
+            }
+            if(!isAvailableBoxes() && !isWinner(row, col, 3)) console.log(`Draw!`);
             switchActivePlayer();
         };
 
@@ -136,5 +157,9 @@ const GameController = (function(
             if(spaces.length > 0) return true;
         }
 
-        return {getBoard,setPlayerName, play, setActivePlayer}
+        const restart = () => {
+            board.clearBoard();
+        };
+
+        return {getBoard,setPlayerName, play, setActivePlayer, getScore, resetScore, restart};
 })();
