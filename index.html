@@ -11,11 +11,39 @@
     <div id="menu" class="display-grid hide">
       <h1>Tic Tac Toe</h1>
       <div class="controls">
-        <button id="three-grid" class="clickable btn">3 X 3 Grid</button>
-        <button id="five-grid" class="clickable btn">5 X 5 Grid</button>
-        <button id="seven-grid" class="clickable btn">7 X 7 Grid</button>
+        <button id="three-grid" class="clickable btn" data-grid="3">
+          3 X 3 Grid
+        </button>
+        <button id="five-grid" class="clickable btn" data-grid="5">
+          5 X 5 Grid
+        </button>
+        <button id="seven-grid" class="clickable btn" data-grid="7">
+          7 X 7 Grid
+        </button>
       </div>
     </div>
+    <dialog id="setup-dialog">
+      <form action="" method="post" id="setup-form">
+        <div id="x-label" class="clickable label" data-first="x">X</div>
+        <input
+          type="text"
+          id="player-x-name"
+          name="player-x"
+          placeholder="CHOOSE NAME"
+        />
+        <div id="o-label" class="clickable label" data-first="o">O</div>
+        <input
+          type="text"
+          id="player-o-name"
+          name="player-o"
+          placeholder="CHOOSE NAME"
+        />
+        <div id="buttons">
+          <button id="back-out">Back Out</button>
+          <button id="play" type="submit">Play</button>
+        </div>
+      </form>
+    </dialog>
     <div class="game">
       <div id="score-board">
         <div id="player-x">
