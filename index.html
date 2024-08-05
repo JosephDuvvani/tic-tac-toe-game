@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div id="menu" class="display-grid hide">
+      <h1>Tic Tac Toe</h1>
+      <div class="controls">
+        <button id="three-grid" class="clickable">3 X 3 Grid</button>
+        <button id="five-grid" class="clickable">5 X 5 Grid</button>
+      </div>
+    </div>
+    <div class="game">
+      <div id="score-board">
+        <div id="player-x">
+          <div class="x-score score">0</div>
+          <div class="name">Player X</div>
+        </div>
+        <div id="player-o">
+          <div class="o-score score">0</div>
+          <div class="name">Player O</div>
+        </div>
+      </div>
+      <div id="board" class="display-grid"></div>
+      <div class="state-buttons">
+        <button class="restart-btn btn clickable">Restart</button>
+        <button class="end-game-btn btn clickable">End Game</button>
+      </div>
+    </div>
+  </body>
+</html>
