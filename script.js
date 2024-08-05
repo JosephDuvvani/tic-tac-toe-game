@@ -77,7 +77,7 @@ const GameController = (function(
         }
 
         let gameState = 'Start';
-        const changeState = (state) => gameState = state;
+        const resetState = () => gameState = 'Start';
         const getGameState = () => gameState; 
 
         const play = (row, col) => {
@@ -164,9 +164,17 @@ const GameController = (function(
 
         const restart = () => {
             board.clearBoard();
+            resetState();
         };
 
-        return {getBoard,setPlayerName, play, setActivePlayer, getScore, resetScore, restart, getGameState, changeState};
+        const endGame = () => {
+            restart();
+            playerOneName = 'Player X';
+            playerTwoName = 'Player O';
+            resetScore();
+        };
+
+        return {getBoard,setPlayerName, play, setActivePlayer, getScore, resetScore, restart, getGameState, resetState, endGame};
 })();
 
 function ScreenController () {
@@ -231,8 +239,26 @@ function ScreenController () {
 
         (score.o > 0) ? oScore.textContent = `${score.o}` : oScore.textContent = '';
     };
+
+    const restart = document.querySelector('.restart-btn');
+    const endGame = document.querySelector('.end-game-btn');
+
+    restart.addEventListener('click', () => {
+        game.restart();
+        updateScreen();
+    });
+
+    const gameContainer = document.querySelector('.game');
+    const menu = document.querySelector('#menu');
+
+    endGame.addEventListener('click', () => {
+        game.endGame();
+        updateScreen();
+        updateScore();
+        gameContainer.style.display = 'none';
+        menu.classList.toggle('hide', false);
+    });
  
-    boardDiv.classList.toggle('hide', false)
     updateScore();
     updateScreen();
 }
