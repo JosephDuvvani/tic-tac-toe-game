@@ -76,6 +76,10 @@ const GameController = (function(
             playerTwoScore = 0;
         }
 
+        let gameState = 'Start';
+        const changeState = (state) => gameState = state;
+        const getGameState = () => gameState; 
+
         const play = (row, col) => {
             const box = board.getBoard()[row][col];
             if(box.getValue() === 0) {
@@ -87,6 +91,7 @@ const GameController = (function(
             if(isWinner(row, col, board.getBoard().length)) {
                 console.log(`${activePlayer.name} Wins`);
                 (activePlayer.marker === 'X') ? setScore(1) : setScore(0,1);
+                gameState = 'Over';
             }
             if(!isAvailableBoxes() && !isWinner(row, col, 3)) console.log(`Draw!`);
             switchActivePlayer();
@@ -161,5 +166,74 @@ const GameController = (function(
             board.clearBoard();
         };
 
-        return {getBoard,setPlayerName, play, setActivePlayer, getScore, resetScore, restart};
+        return {getBoard,setPlayerName, play, setActivePlayer, getScore, resetScore, restart, getGameState, changeState};
 })();
+
+function ScreenController () {
+    const game = GameController;
+    const boardDiv = document.querySelector('#board');
+
+    boardDiv.style.gridTemplateColumns = '6.25rem 0.5rem 6.25rem 0.5rem 6.25rem';
+    boardDiv.style.gridAutoRows = '6.25rem 0.5rem';
+
+    const updateScreen = () => {
+        boardDiv.textContent = '';
+        const board = game.getBoard();
+
+        const horiLine = [];
+        board.forEach((row, r) => {
+            row.forEach((box, c) => {       
+                const playBox = document.createElement('div');
+                playBox.classList.add('box', `row-${board.indexOf(row)}`);
+                playBox.dataset.box = `${r}${c}`;
+                if(box.getValue() === 0) {
+                    playBox.textContent = '';
+                }else {
+                    playBox.textContent = box.getValue();
+                }
+                boardDiv.appendChild(playBox);
+
+                if(row.indexOf(box) < (board.length - 1)) {
+                    const vertLine = document.createElement('div');
+                    vertLine.classList.add('vertical-line', `row-${board.indexOf(row)}`);
+                    boardDiv.appendChild(vertLine);
+
+                }
+                const hori = document.createElement('div');
+                hori.classList.add('horizontal-line', `col-${row.indexOf(box)}`);
+                horiLine.push(hori);
+                if(board.indexOf(row) < (board.length - 1)) horiLine.forEach(line => boardDiv.appendChild(line));
+            })
+        }
+    );
+    };
+
+    boardDiv.addEventListener('click', (e) => {
+        console.log(game.getGameState())
+        if(game.getGameState() === 'Over') return;
+        const selectedBox = e.target.dataset.box;
+
+        if(!selectedBox) return;
+
+        const select = selectedBox.split('');
+        game.play(+select[0], +select[1]);
+        if(game.getGameState() === 'Over') updateScore();
+        updateScreen();
+    });
+
+    const xScore = document.querySelector('.x-score');
+    const oScore = document.querySelector('.o-score');
+
+    const updateScore = () => {
+        const score = game.getScore();
+
+        (score.x > 0) ? xScore.textContent = `${score.x}` : xScore.textContent = '';
+
+        (score.o > 0) ? oScore.textContent = `${score.o}` : oScore.textContent = '';
+    };
+ 
+    boardDiv.classList.toggle('hide', false)
+    updateScore();
+    updateScreen();
+}
+ScreenController();
