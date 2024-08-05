@@ -30,18 +30,63 @@ body {
 #menu {
     height: 100%;
     justify-content: center;
-    align-items: baseline;
+    justify-items: center;
+    align-items: center;
+}
+
+#menu h1 {
+    font-size: 3rem;
+}
+
+.controls {
+    display:grid;
+    grid-template-columns: max-content max-content;
+    justify-items: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+#seven-grid {
+    grid-column: 1 / 3;
 }
 
 .game {
     display: grid;
-    grid-template-rows: 1fr max-content 1fr;
+    grid-template-rows: 0.7fr 0.3fr max-content 1fr;
     height: 100%;
+    justify-items: center;
 }
 
 #score-board {
+    justify-self:normal;
     display: flex;
     justify-content: space-around;
+    align-self: center;
+}
+
+.score {
+    height: 4.5rem;
+    width: 4rem;
+    border: 0.12rem solid #000;
+    border-radius: 0.5rem;
+    align-content: center;
+    text-align: center;
+    font-size: 3rem;
+}
+
+.name {
+    font-size: 1.5rem;
+}
+
+#player-x,
+#player-o {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+#result {
     align-self: center;
 }
 
@@ -54,6 +99,9 @@ body {
     width: 100%;
     height: 100%;
     /* background-color: rgb(196, 255, 201); */
+    font-size: 4rem;
+    align-content: center;
+    text-align: center;
 }
 
 .vertical-line {
@@ -89,4 +137,16 @@ body {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+}
+
+.btn {
+    height: 2.2rem;
+    width: 7rem;
+    padding: 0.2rem;
+    font-size: 1rem;
+    border-style: none;
+    border: 0.15rem solid #000;
+    border-radius: 0.4rem;
+    color: #000;
+    background-color: #e0e0e0;
 }
