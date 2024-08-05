@@ -51,7 +51,7 @@ body {
 }
 
 #setup-dialog {
-    display: block; /*remove this */
+    /* display: block; remove this */
     margin: auto;
     border-style: none;
 }

@@ -36,7 +36,7 @@ const GameController = (function(
     playerTwoName = 'Player O') 
     {
         const board = Gameboard;
-        board.createBoard(3);
+        const createBoard = (grid) => board.createBoard(grid);
         const getBoard = () => board.getBoard();
 
         const players = [
@@ -51,6 +51,7 @@ const GameController = (function(
         ];
 
         const setPlayerName = (name, index) => players[index].name = name;
+        const getPlayerNames = () => [players[0].name, players[1].name];
         let activePlayer = players[0];
         const setActivePlayer = (index) => activePlayer = players[index];
         const getActivePlayer = () => activePlayer;
@@ -177,17 +178,30 @@ const GameController = (function(
             resetScore();
         };
 
-        return {getBoard,setPlayerName, play, setActivePlayer, getScore, resetScore, restart, getGameState, resetState, endGame, getResult};
+        return {createBoard, getBoard,setPlayerName, play, setActivePlayer, getScore, resetScore, restart, getGameState, resetState, endGame, getResult, getPlayerNames};
 })();
 
-function ScreenController () {
+function ScreenController (
+    playerX = 'Player',
+    playerO = 'Player',
+    active,
+    grid
+) {
     const game = GameController;
     const boardDiv = document.querySelector('#board');
+    const names = document.querySelectorAll('.name');
+
+    game.setPlayerName(playerX, 0);
+    game.setPlayerName(playerO, 1);
+    game.setActivePlayer(active);
+    game.createBoard(grid);
 
     boardDiv.style.gridTemplateColumns = '6.25rem 0.5rem 6.25rem 0.5rem 6.25rem';
     boardDiv.style.gridAutoRows = '6.25rem 0.5rem';
 
     const updateScreen = () => {
+        names[0].textContent = game.getPlayerNames()[0];
+        names[1].textContent = game.getPlayerNames()[1];
         resultsDiv.textContent = game.getResult();
         boardDiv.textContent = '';
         const board = game.getBoard();
@@ -269,4 +283,51 @@ function ScreenController () {
     updateScore();
     updateScreen();
 }
-ScreenController();
+
+function setupGrid () {
+    const gameContainer = document.querySelector('.game');
+    const menu = document.querySelector('#menu');
+    gameContainer.style.display = 'none';
+    menu.classList.toggle('hide', false);
+
+    const gridBtns = document.querySelector('.controls');
+    const setupDialog = document.querySelector('#setup-dialog');
+    const start = document.querySelector('#play');
+    const cancel = document.querySelector('#back-out');
+    const labels = document.querySelectorAll('.label');
+
+    let grid = 3;
+
+    gridBtns.addEventListener('click', (e) => {
+        const myGridSize = e.target.dataset.grid;
+
+        if(!myGridSize) return;
+        setupDialog.showModal();
+        grid = +myGridSize;
+        console.log(myGridSize);
+    });
+
+    let firstPlayer = 0;
+
+    labels.forEach(label => {
+        label.addEventListener('click', (e) => {
+            const first = e.target.dataset.first;
+            (first === 'o') ? firstPlayer = 1 : firstPlayer = 0;
+        });
+    });
+
+    cancel.addEventListener('click', () => {
+        setupDialog.closest();
+    });
+
+    start.addEventListener('click', (e) => {
+        e.preventDefault();
+        const xName = document.querySelector('#player-x-name');
+        const oName = document.querySelector('#player-o-name');
+        ScreenController(xName.value, oName.value, firstPlayer, grid);
+        gameContainer.style.display = 'grid';
+        menu.classList.toggle('hide');
+        setupDialog.close();
+    });
+}
+setupGrid();
