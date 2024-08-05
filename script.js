@@ -18,9 +18,7 @@ const Gameboard = (function() {
         createBoard(size);
     }
 
-    const printBoard = () => console.log(board);
-
-    return {getBoard, clearBoard, printBoard,createBoard}
+    return {getBoard, clearBoard,createBoard}
 })();
 
 function Box() {
@@ -89,11 +87,11 @@ const GameController = (function(
             }
             
             if(isWinner(row, col, board.getBoard().length)) {
-                console.log(`${activePlayer.name} Wins`);
                 (activePlayer.marker === 'X') ? setScore(1) : setScore(0,1);
+                result = `${activePlayer.name} Wins`;
                 gameState = 'Over';
             }
-            if(!isAvailableBoxes() && !isWinner(row, col, 3)) console.log(`Draw!`);
+            if(!isAvailableBoxes() && !isWinner(row, col, 3)) result = 'Draw!';
             switchActivePlayer();
         };
 
@@ -162,9 +160,14 @@ const GameController = (function(
             if(spaces.length > 0) return true;
         }
 
+        let result = '';
+        const getResult = () => result;
+        const resetResult = () => result = '';
+
         const restart = () => {
             board.clearBoard();
             resetState();
+            resetResult();
         };
 
         const endGame = () => {
@@ -174,7 +177,7 @@ const GameController = (function(
             resetScore();
         };
 
-        return {getBoard,setPlayerName, play, setActivePlayer, getScore, resetScore, restart, getGameState, resetState, endGame};
+        return {getBoard,setPlayerName, play, setActivePlayer, getScore, resetScore, restart, getGameState, resetState, endGame, getResult};
 })();
 
 function ScreenController () {
@@ -185,6 +188,7 @@ function ScreenController () {
     boardDiv.style.gridAutoRows = '6.25rem 0.5rem';
 
     const updateScreen = () => {
+        resultsDiv.textContent = game.getResult();
         boardDiv.textContent = '';
         const board = game.getBoard();
 
@@ -216,8 +220,9 @@ function ScreenController () {
     );
     };
 
+    const resultsDiv = document.querySelector('#result');
+
     boardDiv.addEventListener('click', (e) => {
-        console.log(game.getGameState())
         if(game.getGameState() === 'Over') return;
         const selectedBox = e.target.dataset.box;
 
@@ -225,7 +230,9 @@ function ScreenController () {
 
         const select = selectedBox.split('');
         game.play(+select[0], +select[1]);
-        if(game.getGameState() === 'Over') updateScore();
+        if(game.getGameState() === 'Over') {
+            updateScore()
+        }
         updateScreen();
     });
 
