@@ -2,6 +2,7 @@ const Gameboard = (function() {
     let board = [];
 
     const createBoard = (gridNum) => {
+        board = [];
         for(let i = 0; i<gridNum; i++) {
             board[i] = [];
             for(let j = 0; j<gridNum; j++) {
@@ -87,7 +88,7 @@ const GameController = (function(
                 return;
             }
             
-            if(isWinner(row, col, board.getBoard().length)) {
+            if(isWinner(row, col)) {
                 (activePlayer.marker === 'X') ? setScore(1) : setScore(0,1);
                 result = `${activePlayer.name} Wins`;
                 gameState = 'Over';
@@ -96,12 +97,14 @@ const GameController = (function(
             switchActivePlayer();
         };
 
-        const isWinner = (row, col, combo) => {
+        const isWinner = (row, col) => {
+            let combo = (board.getBoard().length === 3) ? 3 : 4;
             const checkTrail = (boxes) => {
                 let trail = 0;
                 for(let i = 0; i < boxes.length; i++) {
                     if(boxes[i].getValue() === getActivePlayer().marker) {
                         trail++;
+                        if(trail === combo) return trail;
                     }else{
                         trail = 0;
                     }
@@ -200,8 +203,8 @@ function ScreenController (
     const threeRowSize = '6.25rem 0.5rem';
     const fiveColumnsSizes = '5.25rem 0.4rem 5.25rem 0.4rem 5.25rem 0.4rem 5.25rem 0.4rem 5.25rem';
     const fiveRowSize = '5.25rem 0.4rem';
-    const sevenColumnsSizes = '6.25rem 0.5rem 6.25rem 0.5rem 6.25rem 0.5rem 6.25rem 0.5rem 6.25rem 0.5rem 6.25rem 0.5rem 6.25rem';
-    const sevenRowSize = '6.25rem 0.5rem';
+    const sevenColumnsSizes = '4.25rem 0.4rem 4.25rem 0.4rem 4.25rem 0.4rem 4.25rem 0.4rem 4.25rem 0.4rem 4.25rem 0.4rem 4.25rem';
+    const sevenRowSize = '4.25rem 0.4rem';
 
     switch(grid) {
         case 3:
