@@ -165,6 +165,18 @@ body {
 .row-2 {
     grid-row: 5;
 }
+.row-3 {
+    grid-row: 7;
+}
+.row-4 {
+    grid-row: 9;
+}
+.row-5 {
+    grid-row: 11;
+}
+.row-6 {
+    grid-row: 13;
+}
 
 .col-0 {
     grid-column: 1;
@@ -174,6 +186,18 @@ body {
 }
 .col-2 {
     grid-column: 5;
+}
+.col-3 {
+    grid-column: 7;
+}
+.col-4 {
+    grid-column: 9;
+}
+.col-5 {
+    grid-column: 11;
+}
+.col-6 {
+    grid-column: 13;
 }
 
 .horizontal-line {

@@ -196,8 +196,27 @@ function ScreenController (
     game.setActivePlayer(active);
     game.createBoard(grid);
 
-    boardDiv.style.gridTemplateColumns = '6.25rem 0.5rem 6.25rem 0.5rem 6.25rem';
-    boardDiv.style.gridAutoRows = '6.25rem 0.5rem';
+    const threeColumnsSizes = '6.25rem 0.5rem 6.25rem 0.5rem 6.25rem';
+    const threeRowSize = '6.25rem 0.5rem';
+    const fiveColumnsSizes = '5.25rem 0.4rem 5.25rem 0.4rem 5.25rem 0.4rem 5.25rem 0.4rem 5.25rem';
+    const fiveRowSize = '5.25rem 0.4rem';
+    const sevenColumnsSizes = '6.25rem 0.5rem 6.25rem 0.5rem 6.25rem 0.5rem 6.25rem 0.5rem 6.25rem 0.5rem 6.25rem 0.5rem 6.25rem';
+    const sevenRowSize = '6.25rem 0.5rem';
+
+    switch(grid) {
+        case 3:
+            boardDiv.style.gridTemplateColumns = threeColumnsSizes;
+            boardDiv.style.gridAutoRows = threeRowSize;
+            break;
+        case 5:
+            boardDiv.style.gridTemplateColumns = fiveColumnsSizes;
+            boardDiv.style.gridAutoRows = fiveRowSize;
+            break;
+        case 7:
+            boardDiv.style.gridTemplateColumns = sevenColumnsSizes;
+            boardDiv.style.gridAutoRows = sevenRowSize;
+            break;
+    }
 
     const updateScreen = () => {
         names[0].textContent = game.getPlayerNames()[0];
@@ -304,7 +323,6 @@ function setupGrid () {
         if(!myGridSize) return;
         setupDialog.showModal();
         grid = +myGridSize;
-        console.log(myGridSize);
     });
 
     let firstPlayer = 0;
