@@ -341,11 +341,22 @@ function setupGrid () {
         setupDialog.closest();
     });
 
+    function isSpaceName(inputName) {
+        const spaces = inputName.split('').filter(charr => charr === ' ');
+        if(spaces.length === inputName.length) return true;
+    }
+
     start.addEventListener('click', (e) => {
         e.preventDefault();
         const xName = document.querySelector('#player-x-name');
         const oName = document.querySelector('#player-o-name');
-        ScreenController(xName.value, oName.value, firstPlayer, grid);
+        let playerX = xName.value;
+        let playerO = oName.value;
+
+        if(isSpaceName(playerX) || xName.value == '') playerX = 'Player X';
+        if(isSpaceName(playerO) || oName.value == '') playerO = 'Player O';
+
+        ScreenController(playerX, playerO, firstPlayer, grid);
         gameContainer.style.display = 'grid';
         menu.classList.toggle('hide');
         setupDialog.close();
