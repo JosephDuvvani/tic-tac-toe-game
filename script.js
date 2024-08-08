@@ -299,7 +299,7 @@ function ScreenController (
         updateScreen();
         updateScore();
         gameContainer.style.display = 'none';
-        menu.classList.toggle('hide', false);
+        menu.style.display = 'flex';
     });
  
     updateScore();
@@ -317,6 +317,7 @@ function setupGrid () {
     const start = document.querySelector('#play');
     const cancel = document.querySelector('#back-out');
     const labels = document.querySelectorAll('.label');
+    const selected = document.querySelectorAll('.first-play');
 
     let grid = 3;
 
@@ -333,7 +334,15 @@ function setupGrid () {
     labels.forEach(label => {
         label.addEventListener('click', (e) => {
             const first = e.target.dataset.first;
-            (first === 'o') ? firstPlayer = 1 : firstPlayer = 0;
+            if(first === 'o') {
+                selected[0].classList.toggle('hide');
+                selected[1].classList.toggle('hide', false);
+                return firstPlayer = 1;
+            }else {
+                selected[1].classList.toggle('hide');
+                selected[0].classList.toggle('hide', false);
+                return firstPlayer = 0;
+            }
         });
     });
 
@@ -358,7 +367,7 @@ function setupGrid () {
 
         ScreenController(playerX, playerO, firstPlayer, grid);
         gameContainer.style.display = 'grid';
-        menu.classList.toggle('hide');
+        menu.style.display = 'none';
         setupDialog.close();
     });
 }
