@@ -6,10 +6,20 @@
     <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gluten:wght@100..900&family=Play:wght@400;700&family=Reggae+One&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <div id="menu" class="display-grid">
-      <h1>Tic Tac Toe</h1>
+    <div id="menu">
+      <img src="images/chess-pieces.jpg" alt="" />
+      <img src="images/tic-tac-toe.jpg" alt="" id="right-side-img" />
+      <div class="title"><h1>Tic Tac Toe</h1></div>
       <div class="controls">
         <button id="three-grid" class="clickable btn" data-grid="3">
           3 X 3 Grid
@@ -24,14 +34,20 @@
     </div>
     <dialog id="setup-dialog">
       <form action="" method="post" id="setup-form">
-        <div id="x-label" class="clickable label" data-first="x">X</div>
+        <div class="player-select">
+          <div id="x-label" class="clickable label" data-first="x">X</div>
+          <span class="first-play">- First-Play</span>
+        </div>
         <input
           type="text"
           id="player-x-name"
           name="player-x"
           placeholder="CHOOSE NAME"
         />
-        <div id="o-label" class="clickable label" data-first="o">O</div>
+        <div class="player-select">
+          <span class="first-play hide">First-Play -</span>
+          <div id="o-label" class="clickable label" data-first="o">O</div>
+        </div>
         <input
           type="text"
           id="player-o-name"
@@ -39,8 +55,8 @@
           placeholder="CHOOSE NAME"
         />
         <div id="buttons">
-          <button id="back-out">Back Out</button>
-          <button id="play" type="submit">Play</button>
+          <button id="back-out" class="clickable">Back Out</button>
+          <button id="play" type="submit" class="clickable">Play</button>
         </div>
       </form>
     </dialog>

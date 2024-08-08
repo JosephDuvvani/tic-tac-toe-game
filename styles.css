@@ -13,6 +13,11 @@ body {
     max-width: 100vw;
     display: grid;
     align-items: center;
+    font-family: 'Play', sans-serif;
+}
+
+button {
+    font-family: 'Play', sans-serif;
 }
 
 .display-grid {
@@ -27,23 +32,91 @@ body {
     cursor: pointer;
 }
 
+img {
+    width: 13rem;
+    height: 16rem;
+    object-fit: cover;
+    border: 0.5rem double #fff;
+    position: absolute;
+    top: 2rem;
+    left: clamp(.5rem, 10vw, 15rem);
+    transform: rotate(5deg);
+}
+#right-side-img {
+    left: auto;
+    right: clamp(.5rem, 10vw, 15rem);
+    transform: rotate(-5deg);
+}
+
+@media (max-width: 53em) {
+    img {
+        display: none;
+    }
+    .title,
+    .controls {
+        padding: 1rem;
+    }
+}
+
 #menu {
+    display: flex;
+    flex-direction: column;
     height: 100%;
     justify-content: center;
-    justify-items: center;
+    font-family: 'Reggae One', sans-serif;
+}
+
+.title {
+    display: grid;
+    justify-content: center;
     align-items: center;
+    color: #fff;
+    background-color: #000;
+    min-width: max-content;
+    flex: 1;
+    box-shadow: 0 .2rem .5rem rgb(0, 0, 0, 0.5);
 }
 
 #menu h1 {
     font-size: 3rem;
+    background-color: #000;
 }
 
 .controls {
     display:grid;
-    grid-template-columns: max-content max-content;
+    grid-auto-columns: 1fr;
+    grid-auto-rows: 1fr;
     justify-items: center;
-    align-items: center;
     gap: 1rem;
+    flex: 1;
+}
+
+.controls button:first-child {
+    justify-self: end;
+    align-self: end;
+}
+.controls button:nth-child(2) {
+    justify-self: start;
+    align-self: end;
+}
+.controls button:last-child {
+    align-self: start;
+}
+
+.btn {
+    color: #fff;
+    background-color: hsl(0, 0%, 0%);
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border-style: none;
+    border-radius: 100vmax;
+    box-shadow: 0 1em 1em -1em rgb(0, 0, 0);
+    min-width: max-content;
+}
+
+.btn:hover,
+.btn:focus-visible {
+    background-color: hsl(0, 0%, 30%);
 }
 
 #seven-grid {
@@ -54,6 +127,8 @@ body {
     /* display: block; remove this */
     margin: auto;
     border-style: none;
+    border-radius: 0.5rem;
+    background-color: transparent;
 }
 
 #setup-form {
@@ -61,43 +136,73 @@ body {
     grid-template-columns: minmax(max-content, 20rem);
     padding: 1rem 1.3rem;
     gap: 0.3rem;
-    background-color: #c2c2c2;
+    background-color: hsl(0, 0%, 0%);
+    border: 1em double rgb(255, 255, 255);
+    border-radius: inherit;
+    color: #fff;
+}
+
+.player-select {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
 }
 
 #setup-form input {
     width: 80%;
+    font-size: .9rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.35rem;
+    border-style: none;
+    border: 0.15em solid #cacaca;
+    display: grid;
+    background-color: transparent;
 }
 
 .label {
-    font-size: 2rem;
+    font-size: 2.5rem;
+    color: #fff;
 }
 
-#x-label {
+#setup-form .player-select:first-child {
     justify-self: start;
 }
 
-#o-label {
-    margin-top: 0.5rem;
-}
-
-#o-label,
+#setup-form .player-select:nth-child(3),
 #player-o-name {
     justify-self: end;
+}
+
+.first-play {
+    font-size: 1rem;
 }
 
 #setup-form #buttons {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 5rem;
+    margin-top: 1.5rem;
     margin-bottom: 0.6rem;
+    padding-left: 1rem;
 }
 
-#setup-form input,
+#setup-form button {
+    border-style: none;
+    border-radius: 0.5em;
+    font-weight: 700;
+    background-color: #fff;
+    box-shadow: 0 1.2em 1em -1em rgb(255, 255, 255);
+    padding: .5rem 1rem;
+    font-family: 'Play', sans-serif;
+}
+
 #play,
 #back-out {
     font-size: 0.9rem;
-    padding: 0.2rem;
+}
+
+::backdrop {
+    background-color: transparent;
 }
 
 .game {
@@ -151,6 +256,7 @@ body {
     font-size: 4rem;
     align-content: center;
     text-align: center;
+    font-family: 'Gluten', sans-serif;
 }
 
 .vertical-line {
@@ -210,16 +316,4 @@ body {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-}
-
-.btn {
-    height: 2.2rem;
-    width: 7rem;
-    padding: 0.2rem;
-    font-size: 1rem;
-    border-style: none;
-    border: 0.15rem solid #000;
-    border-radius: 0.4rem;
-    color: #000;
-    background-color: #e0e0e0;
 }
