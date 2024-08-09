@@ -199,12 +199,12 @@ function ScreenController (
     game.setActivePlayer(active);
     game.createBoard(grid);
 
-    const threeColumnsSizes = '6.25rem 0.5rem 6.25rem 0.5rem 6.25rem';
-    const threeRowSize = '6.25rem 0.5rem';
-    const fiveColumnsSizes = '5.25rem 0.4rem 5.25rem 0.4rem 5.25rem 0.4rem 5.25rem 0.4rem 5.25rem';
-    const fiveRowSize = '5.25rem 0.4rem';
-    const sevenColumnsSizes = '4.25rem 0.4rem 4.25rem 0.4rem 4.25rem 0.4rem 4.25rem 0.4rem 4.25rem 0.4rem 4.25rem 0.4rem 4.25rem';
-    const sevenRowSize = '4.25rem 0.4rem';
+    const threeColumnsSizes = '6.25rem 6.25rem 6.25rem';
+    const threeRowSize = '6.25rem';
+    const fiveColumnsSizes = '5.25rem 5.25rem 5.25rem 5.25rem 5.25rem';
+    const fiveRowSize = '5.25rem';
+    const sevenColumnsSizes = '4.25rem 4.25rem 4.25rem 4.25rem 4.25rem 4.25rem 4.25rem';
+    const sevenRowSize = '4.25rem';
 
     switch(grid) {
         case 3:
@@ -240,17 +240,6 @@ function ScreenController (
                     playBox.textContent = box.getValue();
                 }
                 boardDiv.appendChild(playBox);
-
-                if(row.indexOf(box) < (board.length - 1)) {
-                    const vertLine = document.createElement('div');
-                    vertLine.classList.add('vertical-line', `row-${board.indexOf(row)}`);
-                    boardDiv.appendChild(vertLine);
-
-                }
-                const hori = document.createElement('div');
-                hori.classList.add('horizontal-line', `col-${row.indexOf(box)}`);
-                horiLine.push(hori);
-                if(board.indexOf(row) < (board.length - 1)) horiLine.forEach(line => boardDiv.appendChild(line));
             })
         }
     );
