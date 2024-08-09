@@ -217,12 +217,17 @@ img {
     display: flex;
     justify-content: space-around;
     align-self: center;
+    color: #fff;
+    background-color: #000;
+    height: 100%;
+    align-items: center;
+    box-shadow: 0 .15rem .3rem rgb(0, 0, 0, 0.5);
 }
 
 .score {
     height: 4.5rem;
     width: 4rem;
-    border: 0.12rem solid #000;
+    border: 0.12rem solid #fff;
     border-radius: 0.5rem;
     align-content: center;
     text-align: center;
@@ -243,6 +248,7 @@ img {
 
 #result {
     font-size: 2rem;
+    align-self: center;
 }
 
 #board {
